@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnergiCerdas.com - Simulasi Hemat Energi</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #eaf2f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            width: 90%;
+            max-width: 700px;
+            transition: transform 0.3s ease;
+        }
+        .container:hover {
+            transform: scale(1.02);
+        }
+        h1 {
+            color: #2980b9;
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 24px;
+        }
+        label {
+            font-size: 16px;
+            color: #34495e;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        select, input {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0 24px 0;
+            border-radius: 6px;
+            border: 1px solid #bdc3c7;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            padding: 16px;
+            font-size: 17px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #27ae60;
+        }
+        h2 {
+            color: #2980b9;
+            font-size: 22px;
+            text-align: center;
+            margin-top: 35px;
+        }
+        .result {
+            font-size: 16px;
+            color: #2c3e50;
+            text-align: center;
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+        .icon {
+            margin-right: 8px;
+        }
+        .tips {
+            background-color: #f39c12;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Simulasi Hemat Energi - EnergiCerdas.com</h1>
+
+    <label for="lamp">
+        <img class="icon" src="icon-lampu.jpeg" alt="Lampu" width="20"> Pilih jenis lampu:
+    </label>
+    <select id="lamp">
+        <option value="40">Lampu Neon (40W)</option>
+        <option value="60">Lampu Biasa (60W)</option>
+        <option value="9">Lampu LED 9W</option>
+        <option value="12">Lampu LED 12W</option>
+        <option value="20">Lampu Hemat Energi (20W)</option>
+    </select>
+
+    <label for="ac">
+        <img class="icon" src="icon-ac.jpeg" alt="AC" width="20"> Pilih jenis AC:
+    </label>
+    <select id="ac">
+        <option value="600">AC Portable (600W)</option>
+        <option value="900">AC 1 PK (900W)</option>
+        <option value="1200">AC 2 PK (1200W)</option>
+        <option value="1500">AC Inverter 1.5 PK (1500W)</option>
+        <option value="1800">AC Inverter 2 PK (1800W)</option>
+    </select>
+
+    <label for="tv">
+        <img class="icon" src="icon-tv.jpeg" alt="TV" width="20"> Pilih jenis TV:
+    </label>
+    <select id="tv">
+        <option value="50">TV LED (50W)</option>
+        <option value="100">TV Plasma (100W)</option>
+        <option value="150">TV CRT (150W)</option>
+    </select>
+
+    <label for="computer">
+        <img class="icon" src="icon-computer.jpeg" alt="Computer" width="20"> Pilih jenis komputer:
+    </label>
+    <select id="computer">
+        <option value="65">Laptop (65W)</option>
+        <option value="200">PC Desktop (200W)</option>
+    </select>
+
+    <label for="kulkas">
+        <img class="icon" src="icon-kulkas.jpeg" alt="Kulkas" width="20"> Pilih jenis kulkas:
+    </label>
+    <select id="kulkas">
+        <option value="100">Kulkas Mini (100W)</option>
+        <option value="150">Kulkas Standar (150W)</option>
+        <option value="200">Kulkas 2 Pintu (200W)</option>
+        <option value="250">Kulkas Besar (250W)</option>
+        <option value="300">Kulkas Hemat Energi (300W)</option>
+    </select>
+
+
+
+    <label for="hours">Penggunaan per hari (jam):</label>
+    <input type="number" id="hours" value="5" min="1" max="24">
+
+    <button onclick="hitungEnergi()">Hitung Energi</button>
+
+    <h2>Hasil Simulasi:</h2>
+    <div id="hasil" class="result"></div>
+    <div id="tips" class="tips"></div>
+</div>
+
+<script>
+    function hitungEnergi() {
+        var lampu = parseInt(document.getElementById('lamp').value);
+        var ac = parseInt(document.getElementById('ac').value);
+        var tv = parseInt(document.getElementById('tv').value);
+        var computer = parseInt(document.getElementById('computer').value);
+        var jam = parseInt(document.getElementById('hours').value);
+
+        var totalEnergi = (lampu + ac + tv + computer) * jam / 1000;
+        var biayaBulanan = totalEnergi * 30 * 1500;
+
+        document.getElementById('hasil').innerHTML = 
+            `<strong>Konsumsi energi harian:</strong> ${totalEnergi.toFixed(2)} kWh<br>
+            <strong>Tagihan listrik bulanan (estimasi):</strong> Rp${biayaBulanan.toFixed(0)}`;
+
+        // Memberikan saran penghematan energi
+        let saran = "";
+        if (totalEnergi > 5) {
+            saran = "Penggunaan energi Anda tinggi. Pertimbangkan mengurangi waktu penggunaan atau menggunakan perangkat hemat energi.";
+        } else {
+            saran = "Penggunaan energi Anda cukup efisien. Pertahankan kebiasaan hemat energi Anda!";
+        }
+        document.getElementById('tips').innerHTML = saran;
+    }
+</script>
+
+</body>
+</html>
